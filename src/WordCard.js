@@ -1,48 +1,78 @@
 import React, {useState} from 'react';
-import _, { attempt, set } from 'lodash';
+import _, { attempt, constant, set } from 'lodash';
 
 import CharacterCard from './CharacterCard';
-
-const prepareStateFromWord = given_word => {
+let i = 1
+const prepareStateFromWord = (given_word, given_completed, given_attempt) => {
     let word = given_word.toUpperCase()
     let chars = _.shuffle(Array.from(word))
     return {
         word,
         chars,
-        attempt: 1,
+        attempt: given_attempt,
         guess: '',
-        completed: false
+        completed: given_completed
 
     }
 }
 
 export default function WordCard(props) {
+    let selectWord = props.value[0];
+    const [state, setState] = useState(prepareStateFromWord(selectWord, 0 , 1))
 
-    const [state, setState] = useState(prepareStateFromWord(props.value))
-
-    const activateionHandler = c => {
-        console.log(`{c} has been activated`)
+    const activationHandler = c => {
+        console.log(`${c} has been activated`)
 
         let guess = state.guess + c
         setState({...state, guess})
 
         if(guess.length == state.word.length) {
             if(guess == state.word) {
-                console.log('yeah!')
-                setState({...state, completed: true})
+                setState({...state, completed: state.completed + 1}) 
+
+                setTimeout(function() {
+                    alert('yeah!')
+                }, 100);
+                setState(prepareStateFromWord(selectWord, state.completed + 1, 1))
+
             }else{
-                console.log('reset, next attempt')
                 setState({...state, guess: '', attempt: state.attempt + 1})
+
+                setTimeout(function() {
+                    alert('reset, next attempt')
+                }, 100);
+                setState(prepareStateFromWord(selectWord, state.completed, state.attempt + 1))
             }
         }
-        //console.log(guess)
     }
+
+
+        
+    const reset = () => {
+        selectWord = props.value[i];
+        setState({...state, guess: '', attempt: state.attempt + 1})
+        setState(prepareStateFromWord(selectWord, state.completed, state.attempt + 1))
+            i += 1;  
+    }
+    
+        if(i >= props.value.length) {
+            i = 0;
+        }
+
+
     return (
-        <div className='center'>
-            {
-                state.chars.map((c ,i) => 
-                    <CharacterCard value = {c} key={i} activateionHandler={activateionHandler} attempt={state.attempt} completed = {state.completed}/>)
-            }
+        <div>
+            <div className='center'>
+                {
+                    state.chars.map((c ,i) => 
+                        <CharacterCard value = {c} key={i} activationHandler={activationHandler} attempt={state.attempt} completed = {state.completed}/>)
+                }
+                <div>
+                <button className='button' onClick={reset}>RESET</button>
+                </div>
+            </div>
+
         </div>
+    
     )
 }
