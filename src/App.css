@@ -20,6 +20,11 @@
   transform: translate(-50%, -50%);
  }
 
+ .head {
+  text-align: center;
+  font-size: 3em;
+ }
+
  .button {
   margin-top: 5vw;
   align-items: center;

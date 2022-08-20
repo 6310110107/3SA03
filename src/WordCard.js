@@ -62,7 +62,11 @@ export default function WordCard(props) {
 
     return (
         <div>
+                <div className='head'>
+                    <h1>Animals</h1>
+                </div>
             <div className='center'>
+
                 {
                     state.chars.map((c ,i) => 
                         <CharacterCard value = {c} key={i} activationHandler={activationHandler} attempt={state.attempt} completed = {state.completed}/>)
