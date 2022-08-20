@@ -21,7 +21,7 @@ export default function WordCard(props) {
     const [state, setState] = useState(prepareStateFromWord(props.value))
 
     const activateionHandler = c => {
-        console.log(`&{c} has been activated`)
+        console.log(`${c} has been activated`)
 
         let guess = state.guess + c
         setState({...state, guess})
@@ -38,7 +38,7 @@ export default function WordCard(props) {
         //console.log(guess)
     }
     return (
-        <div>
+        <div className='center'>
             {
                 state.chars.map((c ,i) => 
                     <CharacterCard value = {c} key={i} activateionHandler={activateionHandler} attempt={state.attempt}

@@ -3,12 +3,18 @@
   text-align: center;
   width: 3em;
   font-size: 2em;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  margin: 1em;
-  user-select: none;
+  box-shadow: 0 20px 30px 0 rgba(0,0,0,0.2);
+  margin: 0.5em;
+  user-select: auto;
  }
 
  .activeCard {
-  color: red;
-  background: pink;
+  color: white;
+  background: black;
+ }
+ .center {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
  }
